@@ -1,16 +1,17 @@
     import java.util.Scanner;
-    public class MainMenu { //BEGIN MainMenu
+    public class MainMenu {
     static Scanner input = new Scanner(System.in);
-    public static void introductoryMessage() { //BEGIN introductoryMessage()
+
+    private static void introductoryMessage() {
     System.out.println("\nWelcome to Chronicles of Faerûn! Please select one of the following options to continue.\n");
-    System.out.println("1. Continue\n" + "2. New Game\n" + "3. Load Game\n" + "4. Quit\n");
-    } //END introductoryMessage()
-    public static String mainMenuOptions() { //BEGIN mainMenuOptions
+    System.out.println("1.) Continue\n" + "2.) New Game\n" + "3.) Load Game\n" + "4.) Quit\n");
+    }
+    public static void mainMenuOptions() {
     String userInput = "";
     while (true) {
     introductoryMessage();
     String mainMenuOptions = input.nextLine().toLowerCase();
-    switch (mainMenuOptions) { //BEGIN SWITCH
+    switch (mainMenuOptions) {
         case "1":
         case "continue":
         case "continue game":
@@ -22,7 +23,6 @@
         case "new game":
         System.out.println("Starting a new game...\n");
         userInput = "new game";
-        NewGame.newGameIntroduction();
         NewGame.newCharacterPrompt();
             break;
         case "3":
@@ -38,15 +38,14 @@
         userInput = "quit game";
             break;
         default:
-    System.out.println("Invalid choice. Please select a valid option.");
+    System.out.println("---------------------------------------------\n" + "Invalid choice. Please select a valid option.\n" +
+            "---------------------------------------------");
         continue;
-    } //END SWITCH
+    }
     break; //Exits loop if valid choice is made.
-    } //END WHILE
-    return userInput;
-    } //END mainMenuOptions()
-    } //END MainMenu
-
+    }
+    }
+    }
 
 
 
