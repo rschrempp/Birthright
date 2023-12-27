@@ -6,12 +6,12 @@ public class BattleUnit {
     private boolean isDead = false;
     private BattleUnit character;
     private String characterName;
-    private String characterRace;
-    private String characterSubrace;
-    private String characterClass;
+    private ValidCharacterRaces characterRace;
+    private ValidCharacterSubraces characterSubrace;
+    private ValidCharacterClasses characterClass;
     private Map<CharacterAttributes, Integer> characterAttributes = new HashMap<>();
-    private Map<ValidCharacterRaces, List<ValidCharacterSubraces>> subracesMap = new HashMap<>();
-    private String characterBackground;
+    private Map<ValidCharacterRaces, List<ValidCharacterSubraces>> subracesMap = new EnumMap<>(ValidCharacterRaces.class);
+    private ValidCharacterBackgrounds characterBackground;
     private String characterConditions;
     private String characterResistances;
     private String characterItems;
@@ -37,15 +37,14 @@ public class BattleUnit {
         DRAGONBORN("Dragonborn"),
         HALF_ORC("Half-Orc");
 
-        private final String displayRaceName;
-
-        ValidCharacterRaces(String displayRaceName) {
-            this.displayRaceName = displayRaceName;
+        private final String displayRace;
+        ValidCharacterRaces(String displayRace) {
+            this.displayRace = displayRace;
         }
     }
     public enum ValidCharacterSubraces {
-        HIGH_ELF("High-Elf"),
-        WOOD_ELF("Wood-Elf"),
+        HIGH_ELF("High Elf"),
+        WOOD_ELF("Wood Elf"),
         ASMODEUS("Asmodeus"),
         MEPHISTOPHELES("Mephistopheles"),
         ZARIEL("Zariel"),
@@ -72,119 +71,24 @@ public class BattleUnit {
         SILVER_DRAGONBORN("Silver Dragonborn"),
         WHITE_DRAGONBORN("White Dragonborn");
 
-        private final String displaySubraceName;
+        private final String displaySubrace;
 
-        ValidCharacterSubraces(String displaySubraceName) {
-            this.displaySubraceName = displaySubraceName; }
+        ValidCharacterSubraces(String displaySubraces) {
+            this.displaySubrace = displaySubraces; }
     }
-    public enum ValidCharacterClasses {
-        BARBARIAN("Barbarian"),
-        BARD("Bard"),
-        CLERIC("Cleric"),
-        DRUID("Druid"),
-        FIGHTER("Fighter"),
-        MONK("Monk"),
-        PALADIN("Paladin"),
-        RANGER("Ranger"),
-        ROGUE("Rogue"),
-        SORCERER("Sorcerer"),
-        WARLOCK("Warlock"),
-        WIZARD("Wizard");
+    private void initializeSubracesMap() {
 
-        private final String displayClassName;
-
-        ValidCharacterClasses(String displayClassName) {
-            this.displayClassName = displayClassName;
-        }
-    }
-    public enum ValidCharacterBackgrounds {
-        ACOLYTE("Acolyte"),
-        CHARLATAN("Charlatan"),
-        CRIMINAL("Criminal"),
-        ENTERTAINER("Entertainer"),
-        FOLK_HERO("Folk Hero"),
-        GUILD_ARTISAN("Guild Artisan"),
-        NOBLE("Noble"),
-        OUTLANDER("Outlander"),
-        SAGE("Sage"),
-        SOLDIER("Soldier"),
-        URCHIN("Urchin");
-
-        private final String displayBackgroundName;
-
-        ValidCharacterBackgrounds(String displayBackgroundName) {
-            this.displayBackgroundName = displayBackgroundName;
-        }
-    }
-    public enum CharacterAttributes {
-        STRENGTH("Strength"),
-        DEXTERITY("Dexterity"),
-        CONSTITUTION("Constitution"),
-        INTELLIGENCE("Intelligence"),
-        WISDOM("Wisdom"),
-        CHARISMA("Charisma");
-        private final String displayAttributes;
-
-        CharacterAttributes(String displayAttributes) {
-            this.displayAttributes = displayAttributes;
-        }
-    }
-    private String setCharacterName() {
-        String characterName;
-        boolean isValid;
-        do {
-            System.out.println("Enter your name (alphabetic characters, max length 24): \n");
-            characterName = input.nextLine();
-            isValid = characterName.matches("[a-zA-Z\\s']+") && characterName.length() <= 24;
-
-            if (!isValid) {
-                System.out.println("Invalid name. Please enter a valid name.\n");
-            }
-        } while (!isValid);
-        return characterName;
-    }
-    private ValidCharacterRaces setCharacterRace() {
-        String userInput = input.nextLine();
-        ValidCharacterRaces characterRace = null;
-
-        System.out.println("Choose your race: ");
-        for (ValidCharacterRaces race : ValidCharacterRaces.values()) {
-            System.out.println(race.ordinal() + 1 + ".) " + race.displayRaceName);
-        }
-        if (userInput.matches("\\d+")) {
-            int userChoice = Integer.parseInt(userInput);
-            if (userChoice >= 1 && userChoice <= ValidCharacterRaces.values().length) {
-                characterRace = ValidCharacterRaces.values()[userChoice - 1];
-            }
-        } else {
-            try {
-                characterRace = ValidCharacterRaces.valueOf(userInput.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid race. Please enter a valid race.");
-                setCharacterRace();
-            }
-        }
-        if (characterRace != null) {
-            System.out.println("You selected: " + characterRace + ", is that correct? \n");
-            String confirmationInput = input.nextLine().toUpperCase();
-            if (confirmationInput.startsWith("N")) {
-                setCharacterRace();
-            }
-        }
-        return characterRace;
-    }
-
-private void initializeSubracesMap() {
         subracesMap.put(ValidCharacterRaces.ELF, Arrays.asList(ValidCharacterSubraces.HIGH_ELF,
                 ValidCharacterSubraces.WOOD_ELF));
 
         subracesMap.put(ValidCharacterRaces.TIEFLING, Arrays.asList(ValidCharacterSubraces.ASMODEUS,
-                ValidCharacterSubraces.MEPHISTOPHELES,ValidCharacterSubraces.ZARIEL));
+                ValidCharacterSubraces.MEPHISTOPHELES, ValidCharacterSubraces.ZARIEL));
 
         subracesMap.put(ValidCharacterRaces.DROW, Arrays.asList(ValidCharacterSubraces.LOLTH_SWORN,
                 ValidCharacterSubraces.SELDARINE));
 
-        subracesMap.put(ValidCharacterRaces.DWARF, Arrays.asList(ValidCharacterSubraces.GOLD_DWARF, ValidCharacterSubraces.SHIELD_DWARF, ValidCharacterSubraces.DUERGAR));
+        subracesMap.put(ValidCharacterRaces.DWARF, Arrays.asList(ValidCharacterSubraces.GOLD_DWARF,
+                ValidCharacterSubraces.SHIELD_DWARF, ValidCharacterSubraces.DUERGAR));
 
         subracesMap.put(ValidCharacterRaces.HALF_ELF, Arrays.asList(ValidCharacterSubraces.HIGH_HALF_ELF,
                 ValidCharacterSubraces.WOOD_HALF_ELF, ValidCharacterSubraces.DROW_HALF_ELF));
@@ -200,180 +104,321 @@ private void initializeSubracesMap() {
                 ValidCharacterSubraces.COPPER_DRAGONBORN, ValidCharacterSubraces.GOLD_DRAGONBORN,
                 ValidCharacterSubraces.GREEN_DRAGONBORN, ValidCharacterSubraces.RED_DRAGONBORN,
                 ValidCharacterSubraces.SILVER_DRAGONBORN, ValidCharacterSubraces.WHITE_DRAGONBORN));
-}
-private String setCharacterSubrace(ValidCharacterRaces characterRace) {
+    }
+    public enum ValidCharacterClasses {
+        BARBARIAN("Barbarian"),
+        BARD("Bard"),
+        CLERIC("Cleric"),
+        DRUID("Druid"),
+        FIGHTER("Fighter"),
+        MONK("Monk"),
+        PALADIN("Paladin"),
+        RANGER("Ranger"),
+        ROGUE("Rogue"),
+        SORCERER("Sorcerer"),
+        WARLOCK("Warlock"),
+        WIZARD("Wizard");
 
-    if (subracesMap.containsKey(characterRace)) {
-        List<ValidCharacterSubraces> subraces = subracesMap.get(characterRace);
-        displaySubraces(subraces);
-        int userInput = getUserInput(subraces.size());
-        characterSubrace = subraces.get(userInput - 1).displaySubraceName;
-    } else {
-        System.out.println("Invalid character race. Please enter a valid race.");
-        setCharacterSubrace(characterRace);
-    } return characterSubrace;
-}
-    private void displaySubraces (List < ValidCharacterSubraces > subraces) {
-        for (int i = 0; i < subraces.size(); i++) {
-            System.out.println((i + 1) + ".) " + subraces.get(i).displaySubraceName);
+        private final String displayClass;
+
+        ValidCharacterClasses(String displayClass) {
+            this.displayClass = displayClass;
         }
     }
-    private int getUserInput (int max){
-        int userInput;
-        do {
-            System.out.println("Enter your choice: ");
-            userInput = input.nextInt();
-            input.nextLine();
-        } while (userInput < 1 || userInput > max);
-        return userInput;
+    public enum ValidCharacterBackgrounds {
+        ACOLYTE("Acolyte"),
+        CHARLATAN("Charlatan"),
+        CRIMINAL("Criminal"),
+        ENTERTAINER("Entertainer"),
+        FOLK_HERO("Folk Hero"),
+        GUILD_ARTISAN("Guild Artisan"),
+        NOBLE("Noble"),
+        OUTLANDER("Outlander"),
+        SAGE("Sage"),
+        SOLDIER("Soldier"),
+        URCHIN("Urchin");
+
+        private final String displayBackground;
+
+        ValidCharacterBackgrounds(String displayBackground) {
+            this.displayBackground = displayBackground;
+        }
     }
+    public enum CharacterAttributes {
+        STRENGTH("Strength"),
+        DEXTERITY("Dexterity"),
+        CONSTITUTION("Constitution"),
+        INTELLIGENCE("Intelligence"),
+        WISDOM("Wisdom"),
+        CHARISMA("Charisma");
+        private final String displayCharacterAttributes;
 
-    private ValidCharacterClasses setCharacterClass() {
-        String userInput = input.nextLine();
-        ValidCharacterClasses characterClass = null;
-
-        System.out.println("Choose your class: ");
-        for (ValidCharacterClasses validClass : ValidCharacterClasses.values()) {
-            System.out.println(validClass.ordinal() + 1 + ".) " + validClass.displayClassName);
+        CharacterAttributes(String displayCharacterAttributes) {
+            this.displayCharacterAttributes = displayCharacterAttributes;
         }
-        if (userInput.matches("\\d+")) {
-            int userChoice = Integer.parseInt(userInput);
-            if (userChoice >= 1 && userChoice <= ValidCharacterClasses.values().length) {
-                characterClass = ValidCharacterClasses.values()[userChoice - 1];
-            }
-        } else {
-            try {
-                characterClass = ValidCharacterClasses.valueOf(userInput.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid class. Please enter a valid class.");
-                setCharacterClass();
-            }
-        }
-        if (characterClass != null) {
-            System.out.println("You selected: " + characterClass + ", is that correct? \n");
-            String confirmationInput = input.nextLine().toUpperCase();
-            if (confirmationInput.startsWith("N")) {
-                setCharacterClass();
-            }
-        }
-        return characterClass;
     }
-    private ValidCharacterBackgrounds setCharacterBackground() {
-        String userInput = input.nextLine();
-        ValidCharacterBackgrounds characterBackground = null;
-
-        System.out.println("Choose your background: ");
-        for (ValidCharacterBackgrounds background : ValidCharacterBackgrounds.values()) {
-            System.out.println(background.ordinal() + 1 + ".) " + background.displayBackgroundName);
-        }
-        if (userInput.matches("\\d+")) {
-            int userChoice = Integer.parseInt(userInput);
-            if (userChoice >= 1 && userChoice <= ValidCharacterBackgrounds.values().length) {
-                characterBackground = ValidCharacterBackgrounds.values()[userChoice - 1];
-            }
-        } else {
-            try {
-                characterBackground = ValidCharacterBackgrounds.valueOf(userInput.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid background. Please enter a valid background.");
-                setCharacterBackground();
-            }
-        }
-        if (characterBackground != null) {
-            System.out.println("You selected: " + characterBackground + ", is that correct? \n");
-            String confirmationInput = input.nextLine().toUpperCase();
-            if (confirmationInput.startsWith("N")) {
-                setCharacterBackground();
-            }
-        }
-        return characterBackground;
-    }
-    private Map<CharacterAttributes, Integer> setCharacterAttributes(Scanner input, Map<CharacterAttributes, Integer> characterAttributes) {
-
-        initializeAttributes(characterAttributes);
-
-        int totalAttributePoints = 27;
-
-        while (totalAttributePoints > 0) {
-            displayAttributePoints(characterAttributes, totalAttributePoints);
-
-            CharacterAttributes chosenAttribute = getChosenAttribute(input);
-
-            if (chosenAttribute == null) {
-                break;
-            }
-
-            handleAttributeAllocation(input, characterAttributes, totalAttributePoints, chosenAttribute);
-        }
-        displayFinalAttributeAllocation(characterAttributes);
-        return characterAttributes;
-    }
-
     private void initializeAttributes(Map<CharacterAttributes, Integer> characterAttributes) {
         for (CharacterAttributes attribute : CharacterAttributes.values()) {
             characterAttributes.put(attribute, 8);
         }
     }
 
-    private void displayAttributePoints(Map<CharacterAttributes, Integer> characterAttributes, int totalAttributePoints) {
-        System.out.println("Remaining points: " + totalAttributePoints);
-        System.out.println("Available attributes: " + Arrays.stream(CharacterAttributes.values())
-                .map(attribute -> attribute.displayAttributes).collect(Collectors.toList()));
-        System.out.println("Enter attribute to increase (or 'done' to finish): ");
-    }
+    private String setCharacterName() {
+        boolean isValid;
+        do {
+            System.out.println("Enter your name (alphabetic characters, max length 24): \n");
+            characterName = input.nextLine();
+            isValid = characterName.matches("[a-zA-Z\\s']+") && characterName.length() <= 24;
 
-    private CharacterAttributes getChosenAttribute(Scanner input) {
-        System.out.println("Enter attribute to increase (or 'done' to finish): ");
-        String userInput = input.nextLine();
-
-        if (userInput.equalsIgnoreCase("done")) {
-            return null;
-        }
-
-        try {
-            return CharacterAttributes.valueOf(userInput.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid attribute. Please enter a valid attribute. ");
-            return getChosenAttribute(input);
-        }
-    }
-
-    private void handleAttributeAllocation(Scanner input, Map<CharacterAttributes, Integer> characterAttributes,
-        int totalAttributePoints, CharacterAttributes chosenAttribute) {
-        if (characterAttributes.containsKey(chosenAttribute)) {
-            System.out.println("Enter points to allocate (between 1 and 7): ");
-            int pointsToAdd = Integer.parseInt(input.nextLine());
-
-            if (isValidPointAllocation(pointsToAdd, totalAttributePoints)) {
-                updateAttributeValues(characterAttributes, chosenAttribute, pointsToAdd);
-                totalAttributePoints -= pointsToAdd;
-            } else {
-                System.out.println("Invalid input. Please enter a valid number of points. ");
+            if (!isValid) {
+                System.out.println("Invalid name. Please enter a valid name. ");
             }
-        } else {
-            System.out.println("Invalid attribute. Please enter a valid attribute. ");
+        } while (!isValid);
+        return characterName;
+    }
+    private void setCharacterRace() {
+        do {
+            System.out.println("Choose your race: \n");
+            for (ValidCharacterRaces race : ValidCharacterRaces.values()) {
+                System.out.println(race.ordinal() + 1 + ".) " + race.displayRace);
+            }
+            String userInput = input.nextLine().trim();
+            if (userInput.matches("\\d+")) {
+                int userChoice = Integer.parseInt(userInput);
+                if (userChoice >= 1 && userChoice <= ValidCharacterRaces.values().length) {
+                    characterRace = ValidCharacterRaces.values()[userChoice - 1];
+                } else {
+                    System.out.println("Invalid choice. Please enter a valid number. \n");
+                    continue;
+                }
+            } else {
+                try {
+                    characterRace = ValidCharacterRaces.valueOf(userInput.toUpperCase().replace("-", "_").replace(" ", "_"));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid race. Please enter a valid race. \n");
+                    continue;
+                }
+            }
+            if (characterRace != null) {
+                System.out.println("You chose " + characterRace.displayRace + ", is that correct? 'Y'/[Enter] or 'N': \n");
+
+                String confirmationInput = input.nextLine().toUpperCase();
+                if ((confirmationInput.startsWith("Y") || confirmationInput.isEmpty())) {
+                    System.out.println("Character name is: " + characterName);
+                    System.out.println("this.Character name is: " + this.characterName);
+                    System.out.println("Character race is: " + characterRace);
+                    System.out.println("this.Character race is: " + this.characterRace);
+                    System.out.println("Character subrace is: " + characterSubrace);
+                    System.out.println("this.Character subrace is: " + this.characterSubrace);
+                    System.out.println("Character class is: " + characterClass);
+                    System.out.println("this.Character class is: " + this.characterClass);
+                    System.out.println("Character background is: " + characterBackground);
+                    System.out.println("this.Character background is: " + this.characterBackground);
+                    return;
+                } else {
+                    continue;
+                }
+            }
+        } while (true);
+    }
+
+    private void setCharacterSubrace(ValidCharacterRaces characterRace) {
+        initializeSubracesMap();
+
+        do {
+            if (subracesMap.containsKey(this.characterRace)) {
+                System.out.println("Choose your subrace: \n");
+                List<ValidCharacterSubraces> subraces = subracesMap.get(this.characterRace);
+                if (!subraces.isEmpty()) {
+                    for (int i = 0; i < subraces.size(); i++) {
+                        System.out.println((i + 1) + ".) " + subraces.get(i).displaySubrace);
+                    }
+                    String userInput = input.nextLine().trim();
+                    if (userInput.matches("\\d+")) {
+                        int userChoice = Integer.parseInt(userInput);
+                        if (userChoice >= 1 && userChoice <= subraces.size()) {
+                            characterSubrace = subraces.get(userChoice - 1);
+                        } else {
+                            System.out.println("Invalid choice. Please enter a valid number. \n");
+                            continue;
+                        }
+                    } else {
+                        try {
+                            characterSubrace = ValidCharacterSubraces.valueOf(userInput.toUpperCase().replace("-", "_").replace(" ", "_"));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid subrace. Please enter a valid subrace. \n");
+                            continue;
+                        }
+                    }
+                    if (characterSubrace != null) {
+                        System.out.println("You chose " + characterSubrace.displaySubrace + ", is that correct? 'Y'/[Enter] or 'N': \n");
+
+                        String confirmationInput = input.nextLine().toUpperCase();
+                        if ((confirmationInput.startsWith("Y") || confirmationInput.isEmpty())) {
+                            System.out.println("Character name is: " + characterName);
+                            System.out.println("this.Character name is: " + this.characterName);
+                            System.out.println("Character race is: " + characterRace);
+                            System.out.println("this.Character race is: " + this.characterRace);
+                            System.out.println("Character subrace is: " + characterSubrace);
+                            System.out.println("this.Character subrace is: " + this.characterSubrace);
+                            System.out.println("Character class is: " + characterClass);
+                            System.out.println("this.Character class is: " + this.characterClass);
+                            System.out.println("Character background is: " + characterBackground);
+                            System.out.println("this.Character background is: " + this.characterBackground);
+                            return;
+                        }
+                    } else {
+                        characterSubrace = null;
+                    }
+                }
+            } else {
+                break;
+            }
+        } while (true);
+    }
+    private void setCharacterClass() {
+        do {
+            System.out.println("Choose your class: \n");
+            for (ValidCharacterClasses validClass : ValidCharacterClasses.values()) {
+                System.out.println(validClass.ordinal() + 1 + ".) " + validClass.displayClass);
+            }
+            String userInput = input.nextLine().trim();
+            if (userInput.matches("\\d+")) {
+                int userChoice = Integer.parseInt(userInput);
+                if (userChoice >= 1 && userChoice <= ValidCharacterClasses.values().length) {
+                    characterClass = ValidCharacterClasses.values()[userChoice - 1];
+                } else {
+                    System.out.println("Invalid choice. Please enter a valid number. \n");
+                    continue;
+                }
+            } else {
+                try {
+                    characterClass = ValidCharacterClasses.valueOf(userInput.toUpperCase().replace("-", "_").replace(" ", "_"));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid class. Please enter a valid class. \n");
+                    continue;
+                }
+            }
+            if (characterClass != null) {
+                System.out.println("You chose " + characterClass.displayClass + ", is that correct? 'Y'/[Enter] or 'N': \n");
+
+                String confirmationInput = input.nextLine().toUpperCase();
+                if ((confirmationInput.startsWith("Y") || confirmationInput.isEmpty())) {
+                    System.out.println("Character name is: " + characterName);
+                    System.out.println("this.Character name is: " + this.characterName);
+                    System.out.println("Character race is: " + characterRace);
+                    System.out.println("this.Character race is: " + this.characterRace);
+                    System.out.println("Character subrace is: " + characterSubrace);
+                    System.out.println("this.Character subrace is: " + this.characterSubrace);
+                    System.out.println("Character class is: " + characterClass);
+                    System.out.println("this.Character class is: " + this.characterClass);
+                    System.out.println("Character background is: " + characterBackground);
+                    System.out.println("this.Character background is: " + this.characterBackground);
+                    return;
+                } else {
+                    characterClass = null;
+                }
+            }
+        } while (true);
+    }
+
+    private void setCharacterBackground() {
+        do {
+            System.out.println("Choose your background: \n");
+            for (ValidCharacterBackgrounds background : ValidCharacterBackgrounds.values()) {
+                System.out.println(background.ordinal() + 1 + ".) " + background.displayBackground);
+            }
+            String userInput = input.nextLine().trim();
+            if (userInput.matches("\\d+")) {
+                int userChoice = Integer.parseInt(userInput);
+                if (userChoice >= 1 && userChoice <= ValidCharacterBackgrounds.values().length) {
+                    characterBackground = ValidCharacterBackgrounds.values()[userChoice - 1];
+                } else {
+                    System.out.println("Invalid choice. Please enter a valid number. \n");
+                    continue;
+                }
+            } else {
+                try {
+                    characterBackground = ValidCharacterBackgrounds.valueOf(userInput.toUpperCase().replace("-", "_").replace(" ", "_"));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid background. Please enter a valid background. \n");
+                    continue;
+                }
+            }
+            if (characterBackground != null) {
+                System.out.println("You selected " + characterBackground.displayBackground + ", is that correct? 'Y'/[Enter] or 'N': \n");
+
+                String confirmationInput = input.nextLine().toUpperCase();
+                if ((confirmationInput.startsWith("Y") || confirmationInput.isEmpty())) {
+                    System.out.println("Character name is: " + characterName);
+                    System.out.println("this.Character name is: " + this.characterName);
+                    System.out.println("Character race is: " + characterRace);
+                    System.out.println("this.Character race is: " + this.characterRace);
+                    System.out.println("Character subrace is: " + characterSubrace);
+                    System.out.println("this.Character subrace is: " + this.characterSubrace);
+                    System.out.println("Character class is: " + characterClass);
+                    System.out.println("this.Character class is: " + this.characterClass);
+                    System.out.println("Character background is: " + characterBackground);
+                    System.out.println("this.Character background is: " + this.characterBackground);
+                    return;
+                } else {
+                    characterBackground = null;
+                }
+            }
+        } while (true);
+    }
+    private void setCharacterAttributes(Scanner input, Map<CharacterAttributes, Integer> characterAttributes) {
+        initializeAttributes(characterAttributes);
+        int maxTotalAttributePoints = 27;
+
+        do  {
+            System.out.println("Character Attributes: ");
+            System.out.println(" ");
+            System.out.println("Remaining points: " + maxTotalAttributePoints);
+            System.out.println(" ");
+            printChosenAttributes(characterAttributes);
+            System.out.println("Choose an attribute to increase or decrease (minimum 8, maximum 17): \n");
+            System.out.println("\nEnter attribute to change (or 'done' to finish): \n");
+            String userInput = input.nextLine().toUpperCase();
+
+            if (userInput.equalsIgnoreCase("done")) {
+                System.out.println("Final attributes: \n");
+                printChosenAttributes(characterAttributes);
+                break;
+            }
+
+            try {
+                do {
+                    CharacterAttributes chosenAttribute = CharacterAttributes.valueOf(userInput);
+                    System.out.println("Enter points to add (positive) or subtract (negative) to " +
+                            chosenAttribute.displayCharacterAttributes + ": ");
+                    int attributePointsToAddOrSubtract = Integer.parseInt(input.nextLine());
+                    if (characterAttributes.containsKey(chosenAttribute)) {
+                        int currentAttributePoints = characterAttributes.get(chosenAttribute);
+                        int newAttributePoints = currentAttributePoints + attributePointsToAddOrSubtract;
+
+                        if (newAttributePoints >= 8 && newAttributePoints <= 17 && maxTotalAttributePoints - attributePointsToAddOrSubtract >= 0) {
+                            characterAttributes.put(chosenAttribute, newAttributePoints);
+                            maxTotalAttributePoints -= attributePointsToAddOrSubtract;
+                        } else {
+                            System.out.println("Invalid input. Attributes must stay between 8 and 17, and check remaining points. \n");
+                        }
+                    }
+                } while (false);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input. Please enter a valid attribute and points. \n");
+                System.out.println(" ");
+            }
+        } while (maxTotalAttributePoints >= 0);
+    }
+
+    private static void printChosenAttributes(Map<CharacterAttributes, Integer> attributePoints) {
+        for (CharacterAttributes attribute : CharacterAttributes.values()) {
+            System.out.println(attribute.displayCharacterAttributes + ": " + attributePoints.get(attribute));
         }
+        System.out.println();
     }
-
-    private boolean isValidPointAllocation(int pointsToAdd, int totalAttributePoints) {
-        return pointsToAdd >= 1 && pointsToAdd <= 7 && totalAttributePoints - pointsToAdd >= 0;
-    }
-
-    private void updateAttributeValues(Map<CharacterAttributes, Integer> characterAttributes,
-                                       CharacterAttributes chosenAttribute, int pointsToAdd) {
-        int currentValue = characterAttributes.get(chosenAttribute);
-        int newValue = Math.min(currentValue + pointsToAdd, 15);
-        characterAttributes.put(chosenAttribute, newValue);
-    }
-
-    private void displayFinalAttributeAllocation(Map<CharacterAttributes, Integer> characterAttributes) {
-        System.out.println("\nFinal attribute allocation: ");
-        for (Map.Entry<CharacterAttributes, Integer> entry : characterAttributes.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-    }
-
-    private void setCharacterConditions(String characterConditions) {
+    private boolean setCharacterConditions() {
 
         boolean characterBlinded = false;
         boolean characterCharmed = false;
@@ -387,7 +432,11 @@ private String setCharacterSubrace(ValidCharacterRaces characterRace) {
         boolean characterProne = false;
         boolean characterUnconscious = false;
 
-        this.characterConditions = characterConditions;
+        boolean characterConditions = characterBlinded || characterCharmed || characterCursed || characterDiseased ||
+                characterFrightened || characterIncapacitated || characterMaimed || characterPoisoned ||
+                characterPolymorphed || characterProne || characterUnconscious;
+
+        return characterConditions;
     }
 
     private void setCharacterResistances(String characterResistances) {
@@ -407,7 +456,6 @@ private String setCharacterSubrace(ValidCharacterRaces characterRace) {
         int characterForceResistance = 2;
         int characterPsychicResistance = 2;
 
-        this.characterResistances = characterResistances;
     }
 
     private void addItemToInventory(String item) {
@@ -448,15 +496,15 @@ private String setCharacterSubrace(ValidCharacterRaces characterRace) {
     }
 
     public BattleUnit createCharacter() {
-        Scanner input = new Scanner(System.in);
         BattleUnit character = new BattleUnit();
 try {
     character.setCharacterName();
     character.setCharacterRace();
-    character.setCharacterSubrace(ValidCharacterRaces.valueOf(characterRace));
+    character.setCharacterSubrace(characterRace);
     character.setCharacterClass();
     character.setCharacterBackground();
     character.setCharacterAttributes(input, characterAttributes);
+    displayCharacterInfo();
 
 } catch (IllegalArgumentException e) {
     System.out.println("Error... character creation failed.");
@@ -465,15 +513,14 @@ try {
     }
 
     public void displayCharacterInfo() {
-        System.out.println("Character information for " + characterName + ":\n");
-        System.out.println("Race: \n" + characterRace);
-        System.out.println("Subrace: \n" + characterSubrace);
-        System.out.println("Class: \n" + characterClass);
-        System.out.println("Background: \n" + characterBackground);
-        System.out.println("Attributes: \n" + characterAttributes);
-        System.out.println("Base hit points: \n" + characterBaseHitPoints);
-        for (Map.Entry<CharacterAttributes, Integer> entry : characterAttributes.entrySet()) {
+        System.out.println("Character information for " + characterName + ": \n");
+        System.out.println("Race: \n" + characterRace.displayRace);
+        System.out.println("Subrace: \n" + characterSubrace.displaySubrace);
+        System.out.println("Class: \n" + characterClass.displayClass);
+        System.out.println("Background: \n" + characterBackground.displayBackground);
+        System.out.println("Attributes: \n"); for (Map.Entry<CharacterAttributes, Integer> entry : characterAttributes.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+        System.out.println("Base hit points: \n" + characterBaseHitPoints);
+        }
     }
-}

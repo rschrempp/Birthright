@@ -10,10 +10,10 @@ public class NewGame {
     private static void newGamePlayerCharacterList() {
         System.out.println("Please choose one of the Origin characters below. Or, create your own. \n");
         System.out.println("1.) Astarion\n" + "2.) Lae'zel\n" + "3.) Gale\n" + "4.) Shadowheart\n" + "5.) Wyll\n" +
-                "6.) Karlach\n" + "7.) The Dark Urge\n" + "8.) I want to make my own character.\n");
+                "6.) Karlach\n" + "7.) The Dark Urge\n" + "8.) I want to make my own character \n");
     }
     private static String handleCharacterChoice(String characterName) {
-        System.out.println("You chose " + characterName + ", is this correct? \n");
+        System.out.println("You chose " + characterName + ", is this correct? 'Y'/[Enter] or 'N': \n");
         String playerCharacterInputValidation = input.nextLine().toUpperCase();
         if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
             return characterName;
@@ -102,7 +102,7 @@ public class NewGame {
                             "it possesses my whole being. \nInjured beyond repair, I know nothing besides this; \n" +
                             "I must resist this Dark Urge, lest it consume my mind. I must discover what happened to me, \n" +
                             "and who I was. Before my twitching knife-hand writes a tragedy in blood. \n");
-                    System.out.println("You chose The Dark Urge, is this correct? \n");
+                    System.out.println("You chose The Dark Urge, is this correct? 'Y'/[Enter] or 'N': \n");
                     confirmationInput = input.nextLine().toUpperCase();
                     if (confirmationInput.startsWith("Y") || confirmationInput.isEmpty()) {
                         BattleUnit newCharacter = new BattleUnit();
@@ -114,7 +114,7 @@ public class NewGame {
                 case "8":
                 case "own":
                 case "custom":
-                    System.out.println("You want to make your own character, is this correct? \n");
+                    System.out.println("You want to make your own character, is that correct? 'Y'/[Enter] or 'N': \n");
                     confirmationInput = input.nextLine().toUpperCase();
                     if (confirmationInput.startsWith("Y") || confirmationInput.isEmpty()) {
                         BattleUnit newCharacter = new BattleUnit();
