@@ -105,8 +105,8 @@ public class NewGame {
                     System.out.println("You chose The Dark Urge, is this correct? 'Y'/[Enter] or 'N': \n");
                     confirmationInput = input.nextLine().toUpperCase();
                     if (confirmationInput.startsWith("Y") || confirmationInput.isEmpty()) {
-                        BattleUnit newCharacter = new BattleUnit();
-                        newCharacter.createCharacter();
+                        BattleUnit character = new BattleUnit();
+                        character.createCharacter();
                         return "The Dark Urge";
                     } else {
                         return newCharacterPrompt();
@@ -117,8 +117,8 @@ public class NewGame {
                     System.out.println("You want to make your own character, is that correct? 'Y'/[Enter] or 'N': \n");
                     confirmationInput = input.nextLine().toUpperCase();
                     if (confirmationInput.startsWith("Y") || confirmationInput.isEmpty()) {
-                        BattleUnit newCharacter = new BattleUnit();
-                        newCharacter.createCharacter();
+                        BattleUnit character = new BattleUnit();
+                        character.createCharacter();
                         return "Custom";
                     } else {
                         return newCharacterPrompt();
