@@ -156,7 +156,7 @@ public class CharacterRacesAndSubraces {
         initializeSubracesMap();
 
         do {
-            if (subracesMap.containsValue(List.of(CharacterSubracesEnum.NONE))) {
+            if (subracesMap.containsKey(characterRace) && (subracesMap.get(characterRace).contains(CharacterSubracesEnum.NONE))) {
                 characterSubrace = CharacterSubracesEnum.NONE;
                 return;
             }

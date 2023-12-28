@@ -120,11 +120,11 @@ try {
         System.out.println("Character information for " + character.getCharacterName() + ": \n");
         System.out.println("Race: " + character.getCharacterRace().getDisplayRace());
         if(!character.getCharacterSubrace().equals(CharacterRacesAndSubraces.CharacterSubracesEnum.NONE)) {
-        System.out.println("Subrace: " );
+        System.out.println("Subrace: " + character.getCharacterSubrace().getDisplaySubrace());
         }
         System.out.println("Class: " + character.getCharacterClass().getDisplayClass());
         System.out.println("Background: " + character.getCharacterBackground().getDisplayBackground());
-        System.out.println("Attributes: "); for (Map.Entry<CharacterAttributes.CharacterAttributesEnum, Integer> attribute : character.getCharacterAttributes().entrySet()) {
+        System.out.println("\nAttributes: "); for (Map.Entry<CharacterAttributes.CharacterAttributesEnum, Integer> attribute : character.getCharacterAttributes().entrySet()) {
             String attributeName = attribute.getKey().getDisplayCharacterAttributes();
             int attributeValue = attribute.getValue();
             System.out.printf("%s: %d%n", attributeName, attributeValue);

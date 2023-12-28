@@ -7,11 +7,13 @@ public class NewGame {
                 "intent on devouring it from the inside out. The fate of Faerûn lies in your hands. Alone, you may resist. \n" +
                 "But together, you can overcome.\n");
     }
+
     private static void newGamePlayerCharacterList() {
         System.out.println("Please choose one of the Origin characters below. Or, create your own. \n");
         System.out.println("1.) Astarion\n" + "2.) Lae'zel\n" + "3.) Gale\n" + "4.) Shadowheart\n" + "5.) Wyll\n" +
                 "6.) Karlach\n" + "7.) The Dark Urge\n" + "8.) I want to make my own character \n");
     }
+
     private static String handleCharacterChoice(String characterName) {
         System.out.println("You chose " + characterName + ", is this correct? 'Y'/[Enter] or 'N': \n");
         String playerCharacterInputValidation = input.nextLine().toUpperCase();
@@ -21,6 +23,7 @@ public class NewGame {
             return newCharacterPrompt(); // Recursive call to handle invalid input
         }
     }
+
     public static String newCharacterPrompt() {
         newGameIntroduction();
         newGamePlayerCharacterList();
@@ -87,11 +90,11 @@ public class NewGame {
                 case "6":
                 case "karlach":
                     System.out.println("Once a soldier forced to fight in the fires of Avernus, now a woman on the brink of freedom. \n" +
-                             "Karlach is an extremely passionate individual who strives to live life to the fullest. \n" +
-                             "She tends to speak excitedly regarding any of life's simple pleasures, whether that" +
-                             " be food, drink, friends, or intimacy. \nHer demeanor is generally joyous and very forward, " +
-                             "having no fear of loudly proclaiming her love of being alive and how much she cares for those close to her. \n" +
-                             "Her positive disposition and infectious energy seem to allow her to make friends easily. \n" +
+                            "Karlach is an extremely passionate individual who strives to live life to the fullest. \n" +
+                            "She tends to speak excitedly regarding any of life's simple pleasures, whether that" +
+                            " be food, drink, friends, or intimacy. \nHer demeanor is generally joyous and very forward, " +
+                            "having no fear of loudly proclaiming her love of being alive and how much she cares for those close to her. \n" +
+                            "Her positive disposition and infectious energy seem to allow her to make friends easily. \n" +
                             "With a malfunctioning engine for a heart, Karlach is burning with desire to live. \n" +
                             "Will she be able to save herself, or will hell catch up with her sooner or later? \n");
                     return handleCharacterChoice("Karlach");
@@ -128,103 +131,5 @@ public class NewGame {
                     newCharacterPrompt();
             }
         }
-//    public static String newCharacterPrompt() { //BEGIN newCharacterPrompt
-//
-//        String playerCharacter = "";
-//        newGamePlayerCharacterList();
-//        String playerCharacterInputValidation = "";
-//
-//        while (true) {
-//            String newCharacterPrompt = input.nextLine().toLowerCase();
-//            switch (newCharacterPrompt) { //BEGIN SWITCH
-//                case "1":
-//                case "astarion":
-//                    System.out.println("You chose Astarion, is this correct?\n");
-//                    playerCharacterInputValidation = input.nextLine().toUpperCase();
-//                    if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-//                        return playerCharacter = "astarion";
-//                    } else {
-//                        newCharacterPrompt();
-//                    }
-//                    break;
-//                case "2":
-//                case "lae'zel":
-//                    System.out.println("You chose Lae'zel, is this correct?\n");
-//                    playerCharacterInputValidation = input.nextLine().toUpperCase();
-//                    if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-//                        return playerCharacter = "lae'zel";
-//                    } else {
-//                        newCharacterPrompt();
-//                    }
-//                    break;
-//                case "3":
-//                case "gale":
-//                    System.out.println("You chose Gale, is this correct?\n");
-//                    playerCharacterInputValidation = input.nextLine().toUpperCase();
-//                    if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-//                        return playerCharacter = "gale";
-//                    } else {
-//                        newCharacterPrompt();
-//                    }
-//                    break;
-//                case "4":
-//                case "shadowheart":
-//                    System.out.println("You chose Shadowheart, is this correct?\n");
-//                    playerCharacterInputValidation = input.nextLine().toUpperCase();
-//                    if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-//                        return playerCharacter = "shadowheart";
-//                    } else {
-//                        newCharacterPrompt();
-//                    }
-//                    break;
-//                case "5":
-//                case "wyll":
-//                    System.out.println("You chose Wyll, is this correct?\n");
-//                    playerCharacterInputValidation = input.nextLine().toUpperCase();
-//                    if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-//                        return playerCharacter = "wyll";
-//                    } else {
-//                        newCharacterPrompt();
-//                    }
-//                    break;
-//                case "6":
-//                case "karlach":
-//                    System.out.println("You chose Karlach, is this correct?\n");
-//                    playerCharacterInputValidation = input.nextLine().toUpperCase();
-//                    if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-//                        return playerCharacter = "karlach";
-//                    } else {
-//                        newCharacterPrompt();
-//                    }
-//                    break;
-//                case "7":
-//                case "the dark urge":
-//                    System.out.println("You chose The Dark Urge, is this correct?\n");
-//                    playerCharacterInputValidation = input.nextLine().toUpperCase();
-//                    if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-//                        return playerCharacter = "the dark urge";
-//                    } else {
-//                        newCharacterPrompt();
-//                    }
-//                    break;
-//                case "8":
-//                case "own":
-//                case "custom":
-//                    System.out.println("You want to make your own character, is this correct?\n");
-//                    playerCharacterInputValidation = input.nextLine().toUpperCase();
-//                    if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-//                        PlayerCharacter.createPlayerCharacter();
-//                        return playerCharacter = "custom";
-//                    } else {
-//                        newCharacterPrompt();
-//                    }
-//                    break;
-//                default:
-//                     System.out.println("Invalid choice. Please select a valid option.\n");
-//                        continue;
-//                    } //END SWITCH
-//                    break;
-//            } //END WHILE
-//            return playerCharacter;
-        }
     }
+}
