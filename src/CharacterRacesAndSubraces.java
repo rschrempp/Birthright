@@ -24,11 +24,14 @@ public class CharacterRacesAndSubraces {
         HALF_ORC("Half-Orc");
 
         private final String displayRace;
-
         CharacterRacesEnum(String displayRace) {
             this.displayRace = displayRace;
         }
+        public String getDisplayRace() {
+            return displayRace;
+        }
     }
+
 
     public enum CharacterSubracesEnum {
         HIGH_ELF("High Elf"),
@@ -63,6 +66,9 @@ public class CharacterRacesAndSubraces {
 
         CharacterSubracesEnum(String displaySubraces) {
             this.displaySubrace = displaySubraces;
+        }
+        public String getDisplaySubrace() {
+            return displaySubrace;
         }
     }
 

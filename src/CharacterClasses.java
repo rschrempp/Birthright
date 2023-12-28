@@ -22,6 +22,9 @@ public class CharacterClasses {
         CharacterClassesEnum(String displayClass) {
             this.displayClass = displayClass;
         }
+        public String getDisplayClass() {
+            return displayClass;
+        }
     }
     public static CharacterClassesEnum getCharacterClass() {
         setCharacterClass();

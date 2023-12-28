@@ -20,6 +20,9 @@ public class CharacterBackgrounds {
         CharacterBackgroundsEnum(String displayBackground) {
             this.displayBackground = displayBackground;
         }
+        public String getDisplayBackground() {
+            return displayBackground;
+        }
     }
     public static CharacterBackgroundsEnum getCharacterBackground() {
         setCharacterBackground();

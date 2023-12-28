@@ -12,24 +12,26 @@ public class CharacterAttributes {
         INTELLIGENCE("Intelligence"),
         WISDOM("Wisdom"),
         CHARISMA("Charisma");
-        private final String displayCharacterAttributesEnum;
+        private final String displayCharacterAttributes;
 
-        CharacterAttributesEnum(String displayCharacterAttributesEnum) {
-            this.displayCharacterAttributesEnum = displayCharacterAttributesEnum;
+        CharacterAttributesEnum(String displayCharacterAttributes) {
+            this.displayCharacterAttributes = displayCharacterAttributes;
+        }
+        public String getDisplayCharacterAttributes() {
+            return displayCharacterAttributes;
         }
     }
-    private static void initializeAttributes(Map<CharacterAttributesEnum, Integer> characterAttributes) {
+    private static void initializeAttributes() {
         for (CharacterAttributesEnum attribute : CharacterAttributesEnum.values()) {
-            characterAttributes.put(attribute, 8);
+            CharacterAttributes.characterAttributes.put(attribute, 8);
         }
     }
     public static Map<CharacterAttributesEnum, Integer> getCharacterAttributes() {
-        Map<CharacterAttributesEnum, Integer> attributes = new HashMap<>();
-        setCharacterAttributes(input, attributes);
+        setCharacterAttributes();
         return characterAttributes;
     }
-    private static void setCharacterAttributes(Scanner input, Map<CharacterAttributesEnum, Integer> characterAttributes) {
-        initializeAttributes(characterAttributes);
+    private static void setCharacterAttributes() {
+        initializeAttributes();
         int maxTotalAttributePoints = 27;
 
         do  {
@@ -37,14 +39,12 @@ public class CharacterAttributes {
             System.out.println(" ");
             System.out.println("Remaining points: " + maxTotalAttributePoints);
             System.out.println(" ");
-            printChosenAttributes(characterAttributes);
+            printChosenAttributes();
             System.out.println("Choose an attribute to increase or decrease (minimum 8, maximum 17): \n");
             System.out.println("\nEnter attribute to change (or 'done' to finish): \n");
-            String userInput = input.nextLine().toUpperCase();
+            String userInput = CharacterAttributes.input.nextLine().toUpperCase();
 
             if (userInput.equalsIgnoreCase("done")) {
-                System.out.println("Final attributes: \n");
-                printChosenAttributes(characterAttributes);
                 break;
             }
 
@@ -52,14 +52,14 @@ public class CharacterAttributes {
                 do {
                     CharacterAttributesEnum chosenAttribute = CharacterAttributesEnum.valueOf(userInput);
                     System.out.println("Enter points to add (positive) or subtract (negative) to " +
-                            chosenAttribute.displayCharacterAttributesEnum + ": ");
-                    int attributePointsToAddOrSubtract = Integer.parseInt(input.nextLine());
-                    if (characterAttributes.containsKey(chosenAttribute)) {
-                        int currentAttributePoints = characterAttributes.get(chosenAttribute);
+                            chosenAttribute.displayCharacterAttributes + ": ");
+                    int attributePointsToAddOrSubtract = Integer.parseInt(CharacterAttributes.input.nextLine());
+                    if (CharacterAttributes.characterAttributes.containsKey(chosenAttribute)) {
+                        int currentAttributePoints = CharacterAttributes.characterAttributes.get(chosenAttribute);
                         int newAttributePoints = currentAttributePoints + attributePointsToAddOrSubtract;
 
                         if (newAttributePoints >= 8 && newAttributePoints <= 17 && maxTotalAttributePoints - attributePointsToAddOrSubtract >= 0) {
-                            characterAttributes.put(chosenAttribute, newAttributePoints);
+                            CharacterAttributes.characterAttributes.put(chosenAttribute, newAttributePoints);
                             maxTotalAttributePoints -= attributePointsToAddOrSubtract;
                         } else {
                             System.out.println("Invalid input. Attributes must stay between 8 and 17, and check remaining points. \n");
@@ -73,9 +73,9 @@ public class CharacterAttributes {
         } while (maxTotalAttributePoints >= 0);
     }
 
-    private static void printChosenAttributes(Map<CharacterAttributesEnum, Integer> attributePoints) {
+    private static void printChosenAttributes() {
         for (CharacterAttributesEnum attribute : CharacterAttributesEnum.values()) {
-            System.out.println(attribute.displayCharacterAttributesEnum + ": " + attributePoints.get(attribute));
+            System.out.println(attribute.displayCharacterAttributes + ": " + CharacterAttributes.characterAttributes.get(attribute));
         }
         System.out.println();
     }
