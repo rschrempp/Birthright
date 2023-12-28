@@ -119,7 +119,9 @@ try {
     public void displayCharacterInfo(BattleUnit character) {
         System.out.println("Character information for " + character.getCharacterName() + ": \n");
         System.out.println("Race: " + character.getCharacterRace().getDisplayRace());
-        System.out.println("Subrace: " + character.getCharacterSubrace().getDisplaySubrace());
+        if(!character.getCharacterSubrace().equals(CharacterRacesAndSubraces.CharacterSubracesEnum.NONE)) {
+        System.out.println("Subrace: " );
+        }
         System.out.println("Class: " + character.getCharacterClass().getDisplayClass());
         System.out.println("Background: " + character.getCharacterBackground().getDisplayBackground());
         System.out.println("Attributes: "); for (Map.Entry<CharacterAttributes.CharacterAttributesEnum, Integer> attribute : character.getCharacterAttributes().entrySet()) {

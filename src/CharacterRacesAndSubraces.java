@@ -1,8 +1,5 @@
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.awt.geom.NoninvertibleTransformException;
+import java.util.*;
 
 public class CharacterRacesAndSubraces {
     private static Map<CharacterRacesEnum, List<CharacterSubracesEnum>> subracesMap = new EnumMap<>(CharacterRacesEnum.class);
@@ -24,9 +21,11 @@ public class CharacterRacesAndSubraces {
         HALF_ORC("Half-Orc");
 
         private final String displayRace;
+
         CharacterRacesEnum(String displayRace) {
             this.displayRace = displayRace;
         }
+
         public String getDisplayRace() {
             return displayRace;
         }
@@ -60,13 +59,15 @@ public class CharacterRacesAndSubraces {
         GREEN_DRAGONBORN("Green Dragonborn"),
         RED_DRAGONBORN("Red Dragonborn"),
         SILVER_DRAGONBORN("Silver Dragonborn"),
-        WHITE_DRAGONBORN("White Dragonborn");
+        WHITE_DRAGONBORN("White Dragonborn"),
+        NONE("None");
 
         private final String displaySubrace;
 
         CharacterSubracesEnum(String displaySubraces) {
             this.displaySubrace = displaySubraces;
         }
+
         public String getDisplaySubrace() {
             return displaySubrace;
         }
@@ -100,12 +101,18 @@ public class CharacterRacesAndSubraces {
                 CharacterSubracesEnum.COPPER_DRAGONBORN, CharacterSubracesEnum.GOLD_DRAGONBORN,
                 CharacterSubracesEnum.GREEN_DRAGONBORN, CharacterSubracesEnum.RED_DRAGONBORN,
                 CharacterSubracesEnum.SILVER_DRAGONBORN, CharacterSubracesEnum.WHITE_DRAGONBORN));
+
+        subracesMap.put(CharacterRacesEnum.HUMAN, List.of(CharacterSubracesEnum.NONE));
+        subracesMap.put(CharacterRacesEnum.GITHYANKI, List.of(CharacterSubracesEnum.NONE));
+        subracesMap.put(CharacterRacesEnum.HALF_ORC, List.of(CharacterSubracesEnum.NONE));
+
     }
 
     public static CharacterRacesEnum getCharacterRace() {
         setCharacterRace();
         return characterRace;
     }
+
     private static void setCharacterRace() {
         do {
             System.out.println("Choose your race: \n");
@@ -135,8 +142,6 @@ public class CharacterRacesAndSubraces {
                 String confirmationInput = input.nextLine().toUpperCase();
                 if ((confirmationInput.startsWith("Y") || confirmationInput.isEmpty())) {
                     return;
-                } else {
-                    continue;
                 }
             }
         } while (true);
@@ -146,11 +151,16 @@ public class CharacterRacesAndSubraces {
         setCharacterSubrace(characterRace);
         return characterSubrace;
     }
+
     private static void setCharacterSubrace(CharacterRacesEnum characterRace) {
         initializeSubracesMap();
 
         do {
-            if (subracesMap.containsKey(characterRace)) {
+            if (subracesMap.containsValue(List.of(CharacterSubracesEnum.NONE))) {
+                characterSubrace = CharacterSubracesEnum.NONE;
+                return;
+            }
+            else if (subracesMap.containsKey(characterRace)) {
                 System.out.println("Choose your subrace: \n");
                 List<CharacterSubracesEnum> subraces = subracesMap.get(characterRace);
                 if (!subraces.isEmpty()) {
@@ -176,17 +186,12 @@ public class CharacterRacesAndSubraces {
                     }
                     if (characterSubrace != null) {
                         System.out.println("You chose " + characterSubrace.displaySubrace + ", is that correct? 'Y'/[Enter] or 'N': \n");
-
                         String confirmationInput = input.nextLine().toUpperCase();
                         if ((confirmationInput.startsWith("Y") || confirmationInput.isEmpty())) {
                             return;
                         }
-                    } else {
-                        continue;
                     }
                 }
-            } else {
-                break;
             }
         } while (true);
     }

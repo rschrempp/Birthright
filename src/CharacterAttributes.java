@@ -42,7 +42,7 @@ public class CharacterAttributes {
             printChosenAttributes();
             System.out.println("Choose an attribute to increase or decrease (minimum 8, maximum 17): \n");
             System.out.println("\nEnter attribute to change (or 'done' to finish): \n");
-            String userInput = CharacterAttributes.input.nextLine().toUpperCase();
+            String userInput = CharacterAttributes.input.nextLine().toUpperCase().trim();
 
             if (userInput.equalsIgnoreCase("done")) {
                 break;
