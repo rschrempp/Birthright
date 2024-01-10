@@ -27,7 +27,7 @@ public class Humanoid {
         this.characterSubrace = CharacterSubrace.fromEnum(characterSubrace);
         this.characterClass = CharacterClass.fromEnum(characterClass);
         this.characterBackground = CharacterBackground.fromEnum(characterBackground);
-        this.characterAttributes = new CharacterAttributes(characterAttributes.toArray(new CharacterAttributes.CharacterAttributesEnum(([0]));
+        this.characterAttributes = new CharacterAttributes(characterAttributes.toArray(new CharacterAttributes.CharacterAttributesEnum[0]));
     }
 
     public CharacterName getCharacterName() {

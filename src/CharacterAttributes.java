@@ -2,11 +2,11 @@ import java.util.*;
 
 public class CharacterAttributes {
     private CharacterAttributesEnum characterAttributes;
-    private final List<CharacterAttributesEnum> attributes;
+    private List<CharacterAttributesEnum> attributes = null;
     private static final Map<CharacterAttributesEnum, Integer> attributesMap = initializeAttributesMap();
     private static final Scanner input = new Scanner(System.in);
 
-    public CharacterAttributes(CharacterAttributesEnum... characterAttributes) {this.attributes = Arrays.asList(attributes); }
+    public CharacterAttributes(CharacterAttributesEnum... attributes) {this.attributes = Arrays.asList(attributes); }
     public CharacterAttributes() {
 
 }
@@ -31,8 +31,8 @@ public enum CharacterAttributesEnum {
         return attributesMap;
     }
 
-    public CharacterAttributesEnum getCharacterAttributes() {
-        return characterAttributes;
+    public List<CharacterAttributesEnum> getCharacterAttributes() {
+        return attributes;
     }
 
     public void setCharacterAttributes() {

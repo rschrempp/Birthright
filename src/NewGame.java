@@ -65,33 +65,33 @@ public class NewGame {
                 System.out.println("Savaric is a brutal savage, known only by their savagery and taste for profit...\n" +
                         "A former mercenary, Savaric's only concern is their own benefit. " +
                         "Savaric prefers to handle situations directly, and has little patience for diplomacy.");
-                Humanoid savaric = new Humanoid(new CharacterName("Savaric"), CharacterRace.CharacterRacesEnum.HUMAN, CharacterSubrace.CharacterSubracesEnum.NONE, CharacterClass.CharacterClassesEnum.BARBARIAN, CharacterBackground.CharacterBackgroundsEnum.CRIMINAL, );
-                savaric.displayCharacterInfo();
+                PredefinedCharacters.createSavaric();
+                PredefinedCharacters.savaric.displayCharacterInfo();
                 return;
             case BALDWIN:
                 System.out.println("Baldwin is a Paladin, known by the peasantry in the slums of Isgard.\nBaldwin is also a humble blacksmith, providing his community with armor and weapons to fight against the Abyss. \n");
-                Humanoid baldwin = new Humanoid(new CharacterName("Baldwin"), CharacterRace.CharacterRacesEnum.DWARF, CharacterSubrace.CharacterSubracesEnum.SHIELD_DWARF, CharacterClass.CharacterClassesEnum.PALADIN, CharacterBackground.CharacterBackgroundsEnum.FOLK_HERO);
-                baldwin.displayCharacterInfo();
+//                Humanoid baldwin = new Humanoid(new CharacterName("Baldwin"), CharacterRace.CharacterRacesEnum.DWARF, CharacterSubrace.CharacterSubracesEnum.SHIELD_DWARF, CharacterClass.CharacterClassesEnum.PALADIN, CharacterBackground.CharacterBackgroundsEnum.FOLK_HERO);
+//                baldwin.displayCharacterInfo();
                 return;
             case YSORIA:
                 System.out.println("Ysoria is a deceitful witch that specializes in manipulation.\nShe finds pleasure in trickery, deceit, and surprise. Her home is well-kept, serviced by her thralls that fell for her false promises. \n");
-                Humanoid ysoria = new Humanoid(new CharacterName("Ysoria"), CharacterRace.CharacterRacesEnum.ELF, CharacterSubrace.CharacterSubracesEnum.DARK_ELF, CharacterClass.CharacterClassesEnum.WARLOCK, CharacterBackground.CharacterBackgroundsEnum.CHARLATAN);
-                ysoria.displayCharacterInfo();
+//                Humanoid ysoria = new Humanoid(new CharacterName("Ysoria"), CharacterRace.CharacterRacesEnum.ELF, CharacterSubrace.CharacterSubracesEnum.DARK_ELF, CharacterClass.CharacterClassesEnum.WARLOCK, CharacterBackground.CharacterBackgroundsEnum.CHARLATAN);
+//                ysoria.displayCharacterInfo();
                 return;
             case AURELIA:
                 System.out.println("Aurelia is a poor thief accustomed to survival by any means necessary... \nShe often retells stories of her youth, where pickpocketing and stealing food meant another day of life for herself. \n");
-                Humanoid aurelia = new Humanoid(new CharacterName("Aurelia"), CharacterRace.CharacterRacesEnum.GNOME, CharacterSubrace.CharacterSubracesEnum.ROCK_GNOME, CharacterClass.CharacterClassesEnum.ROGUE, CharacterBackground.CharacterBackgroundsEnum.URCHIN);
-                aurelia.displayCharacterInfo();
+//                Humanoid aurelia = new Humanoid(new CharacterName("Aurelia"), CharacterRace.CharacterRacesEnum.GNOME, CharacterSubrace.CharacterSubracesEnum.ROCK_GNOME, CharacterClass.CharacterClassesEnum.ROGUE, CharacterBackground.CharacterBackgroundsEnum.URCHIN);
+//                aurelia.displayCharacterInfo();
                 return;
             case OTTO:
                 System.out.println("Otto is the titular Bard of the Seventh Kingdom. \nOtto favors diplomacy, a good wine, and entertainment than violence. When possible, Otto will make friends in unexpected places. \n");
-                Humanoid otto = new Humanoid(new CharacterName("Otto"), CharacterRace.CharacterRacesEnum.HALF_ELF, CharacterSubrace.CharacterSubracesEnum.HIGH_HALF_ELF, CharacterClass.CharacterClassesEnum.BARD, CharacterBackground.CharacterBackgroundsEnum.ENTERTAINER);
-                otto.displayCharacterInfo();
+//                Humanoid otto = new Humanoid(new CharacterName("Otto"), CharacterRace.CharacterRacesEnum.HALF_ELF, CharacterSubrace.CharacterSubracesEnum.HIGH_HALF_ELF, CharacterClass.CharacterClassesEnum.BARD, CharacterBackground.CharacterBackgroundsEnum.ENTERTAINER);
+//                otto.displayCharacterInfo();
                 return;
             case CHLOE:
                 System.out.println("Chloe is a noble Druid obsessed with solving the riddle of civilization.\nIf we were all meant to be, surely this world would have the means to support us? While curious, Chloe is hesitant to commit to anything that might yield bad fruit. \n");
-                Humanoid chloe = new Humanoid(new CharacterName("Chloe"), CharacterRace.CharacterRacesEnum.ELF, CharacterSubrace.CharacterSubracesEnum.WOOD_ELF, CharacterClass.CharacterClassesEnum.DRUID, CharacterBackground.CharacterBackgroundsEnum.OUTLANDER);
-                chloe.displayCharacterInfo();
+//                Humanoid chloe = new Humanoid(new CharacterName("Chloe"), CharacterRace.CharacterRacesEnum.ELF, CharacterSubrace.CharacterSubracesEnum.WOOD_ELF, CharacterClass.CharacterClassesEnum.DRUID, CharacterBackground.CharacterBackgroundsEnum.OUTLANDER);
+//                chloe.displayCharacterInfo();
                 return;
             case THE_OUTCAST:
                 System.out.println("The fringe of society is where you call home. You, among your caste, are the last to find relief. \n");
