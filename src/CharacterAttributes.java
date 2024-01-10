@@ -1,40 +1,45 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class CharacterAttributes {
-    private static final Map<CharacterAttributes.CharacterAttributesEnum, Integer> characterAttributes = new HashMap<>();
+    private CharacterAttributesEnum characterAttributes;
+    private final List<CharacterAttributesEnum> attributes;
+    private static final Map<CharacterAttributesEnum, Integer> attributesMap = initializeAttributesMap();
     private static final Scanner input = new Scanner(System.in);
-    public enum CharacterAttributesEnum {
-        STRENGTH("Strength"),
-        DEXTERITY("Dexterity"),
-        CONSTITUTION("Constitution"),
-        INTELLIGENCE("Intelligence"),
-        WISDOM("Wisdom"),
-        CHARISMA("Charisma");
-        private final String displayCharacterAttributes;
 
-        CharacterAttributesEnum(String displayCharacterAttributes) {
-            this.displayCharacterAttributes = displayCharacterAttributes;
-        }
-        public String getDisplayCharacterAttributes() {
-            return displayCharacterAttributes;
-        }
-    }
-    private static void initializeAttributes() {
+    public CharacterAttributes(CharacterAttributesEnum... characterAttributes) {this.attributes = Arrays.asList(attributes); }
+    public CharacterAttributes() {
+
+}
+public enum CharacterAttributesEnum {
+    STRENGTH("Strength"),
+    DEXTERITY("Dexterity"),
+    CONSTITUTION("Constitution"),
+    INTELLIGENCE("Intelligence"),
+    WISDOM("Wisdom"),
+    CHARISMA("Charisma");
+
+    private final String displayAttributeEnum;
+    CharacterAttributesEnum(String displayAttribute) {displayAttributeEnum = displayAttribute; }
+    public String getDisplayAttribute() { return displayAttributeEnum; }
+}
+
+    private static Map<CharacterAttributesEnum, Integer> initializeAttributesMap() {
+        Map<CharacterAttributesEnum, Integer> attributesMap = new HashMap<>();
         for (CharacterAttributesEnum attribute : CharacterAttributesEnum.values()) {
-            CharacterAttributes.characterAttributes.put(attribute, 8);
+            attributesMap.put(attribute, 8);
         }
+        return attributesMap;
     }
-    public static Map<CharacterAttributesEnum, Integer> getCharacterAttributes() {
-        setCharacterAttributes();
+
+    public CharacterAttributesEnum getCharacterAttributes() {
         return characterAttributes;
     }
-    private static void setCharacterAttributes() {
-        initializeAttributes();
+
+    public void setCharacterAttributes() {
+        CharacterAttributesEnum finalAttributeSelection = null;
         int maxTotalAttributePoints = 27;
 
-        do  {
+        do {
             System.out.println("Character Attributes: ");
             System.out.println(" ");
             System.out.println("Remaining points: " + maxTotalAttributePoints);
@@ -42,40 +47,39 @@ public class CharacterAttributes {
             printChosenAttributes();
             System.out.println("Choose an attribute to increase or decrease (minimum 8, maximum 17): \n");
             System.out.println("\nEnter attribute to change (or 'done' to finish): \n");
-            String userInput = CharacterAttributes.input.nextLine().toUpperCase().trim();
+            String userInput = input.nextLine().trim();
 
-            if (userInput.equalsIgnoreCase("done")) {
+            if (userInput.equalsIgnoreCase("done") && maxTotalAttributePoints == 0) {
                 break;
             }
 
             try {
-                do {
-                    CharacterAttributesEnum chosenAttribute = CharacterAttributesEnum.valueOf(userInput);
-                    System.out.println("Enter points to add (positive) or subtract (negative) to " +
-                            chosenAttribute.displayCharacterAttributes + ": ");
-                    int attributePointsToAddOrSubtract = Integer.parseInt(CharacterAttributes.input.nextLine());
-                    if (CharacterAttributes.characterAttributes.containsKey(chosenAttribute)) {
-                        int currentAttributePoints = CharacterAttributes.characterAttributes.get(chosenAttribute);
-                        int newAttributePoints = currentAttributePoints + attributePointsToAddOrSubtract;
+                if (attributesMap.containsKey(CharacterAttributesEnum.valueOf(userInput.toUpperCase()))) {
+                    finalAttributeSelection = CharacterAttributesEnum.valueOf(userInput.toUpperCase());
+                    int currentAttributePoints = attributesMap.get(CharacterAttributesEnum.valueOf(userInput.toUpperCase()));
+                    System.out.println("Enter points to add (positive) or subtract (negative) to " + userInput + ": ");
+                    int attributePointsToAddOrSubtract = Integer.parseInt(input.nextLine());
+                    int newAttributePoints = currentAttributePoints + attributePointsToAddOrSubtract;
 
-                        if (newAttributePoints >= 8 && newAttributePoints <= 17 && maxTotalAttributePoints - attributePointsToAddOrSubtract >= 0) {
-                            CharacterAttributes.characterAttributes.put(chosenAttribute, newAttributePoints);
-                            maxTotalAttributePoints -= attributePointsToAddOrSubtract;
-                        } else {
-                            System.out.println("Invalid input. Attributes must stay between 8 and 17, and check remaining points. \n");
-                        }
+                    if (newAttributePoints >= 8 && newAttributePoints <= 17 && maxTotalAttributePoints - attributePointsToAddOrSubtract >= 0) {
+                        attributesMap.put(CharacterAttributesEnum.valueOf(userInput.toUpperCase()), newAttributePoints);
+                        maxTotalAttributePoints -= attributePointsToAddOrSubtract;
+                    } else {
+                        System.out.println("Invalid input. Attributes must stay between 8 and 17, and check remaining points. ");
                     }
-                } while (false);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid input. Please enter a valid attribute and points. \n");
-                System.out.println(" ");
+                } else {
+                    System.out.println("Invalid input. Please enter a valid attribute and points. ");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid attribute and points.");
             }
-        } while (maxTotalAttributePoints >= 0);
+        } while (maxTotalAttributePoints != 0);
+        characterAttributes = finalAttributeSelection;
     }
 
     private static void printChosenAttributes() {
         for (CharacterAttributesEnum attribute : CharacterAttributesEnum.values()) {
-            System.out.println(attribute.displayCharacterAttributes + ": " + CharacterAttributes.characterAttributes.get(attribute));
+            System.out.println(attribute + ": " + attributesMap.get(attribute));
         }
         System.out.println();
     }

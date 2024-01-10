@@ -2,134 +2,111 @@ import java.util.Scanner;
 public class NewGame {
     private static Scanner input = new Scanner(System.in);
 
+    public enum NewGameCharacterList {
+        SAVARIC("Savaric"),
+        BALDWIN("Baldwin"),
+        YSORIA("Ysoria"),
+        AURELIA("Aurelia"),
+        OTTO("Otto"),
+        CHLOE("Chloe"),
+        THE_OUTCAST("The Outcast"),
+        CUSTOM("Custom");
+
+        private final String displayCharacters;
+
+        NewGameCharacterList(String displayCharacters) {
+            this.displayCharacters = displayCharacters;
+        }
+
+        public String getDisplayCharacters() {
+            return displayCharacters;
+        }
+    }
+    public static void newGameStart() {
+        newGameIntroduction();
+        getUserChoice();
+    }
+
     private static void newGameIntroduction() {
-        System.out.println("Welcome, adventurer... to the Forgotten Realms. An ancient evil has returned to Baldur's Gate, \n" +
-                "intent on devouring it from the inside out. The fate of Faerûn lies in your hands. Alone, you may resist. \n" +
-                "But together, you can overcome.\n");
-    }
-
-    private static void newGamePlayerCharacterList() {
+        System.out.println("Welcome, adventurer... to Birthright. \nThe essence of Humanity lives in ambiguity. Decide your fate and create your legacy. ");
         System.out.println("Please choose one of the Origin characters below. Or, create your own. \n");
-        System.out.println("1.) Astarion\n" + "2.) Lae'zel\n" + "3.) Gale\n" + "4.) Shadowheart\n" + "5.) Wyll\n" +
-                "6.) Karlach\n" + "7.) The Dark Urge\n" + "8.) I want to make my own character \n");
-    }
-
-    private static String handleCharacterChoice(String characterName) {
-        System.out.println("You chose " + characterName + ", is this correct? 'Y'/[Enter] or 'N': \n");
-        String playerCharacterInputValidation = input.nextLine().toUpperCase();
-        if (playerCharacterInputValidation.startsWith("Y") || playerCharacterInputValidation.isEmpty()) {
-            return characterName;
-        } else {
-            return newCharacterPrompt(); // Recursive call to handle invalid input
+        for (NewGameCharacterList character : NewGameCharacterList.values()) {
+            System.out.println(character.ordinal() + 1 + ".) " + character.displayCharacters);
         }
     }
 
-    public static String newCharacterPrompt() {
-        newGameIntroduction();
-        newGamePlayerCharacterList();
-        String confirmationInput;
-        while (true) {
-            String newCharacterPrompt = input.nextLine().toLowerCase();
-            switch (newCharacterPrompt) {
-                case "1":
-                case "astarion":
-                    System.out.println("Astarion was a young magistrate in Baldur's Gate, " +
-                            "until one day he was assaulted and almost killed by a gang of Gurs. " +
-                            "\nThe vampire lord, Cazador Szarr, who had taken interest in him, " +
-                            "approached Astarion and turned him into one of his slaves – a vampire spawn. " +
-                            "\nAstarion prowled the night as a vampire spawn for centuries, " +
-                            "serving a sadistic master until he was snatched away. " +
-                            "\nNow, he can walk in the light and has the chance at a new life, " +
-                            "but how long can he keep his past buried...?\n");
-                    return handleCharacterChoice("Astarion");
-                case "2":
-                case "lae'zel":
-                    System.out.println("Lae'zel is a Githyanki Warrior from Crèche K'liir, a githyanki " +
-                            "enclave on an asteroid near Selûne, the moon of Faerûn. \n" +
-                            "Lae'zel is depicted as xenophobic, arrogant, and quick to anger. \n" + "Lae'zel dislikes " +
-                            "acts of mercy and compassion, showing submission, or respect and diplomacy over force and domination. \n" +
-                            "She is proud of her race, and frequently makes comments to the party detailing githyanki " +
-                            "customs and the nature of her people. \n" +
-                            "She is fiercely loyal to her queen Vlaakith.\n");
-                    return handleCharacterChoice("Lae'zel");
-                case "3":
-                case "gale":
-                    System.out.println("Gale is a magical prodigy – a wizard of great talent and incredible knowledge. \n" +
-                            "Imbued with the devastating power of a Netherese orb, Gale must continually consume magical artefacts, \n" +
-                            "lest he unleash that explosive force upon himself and his surroundings. \n" +
-                            "Gale is an intelligent, thoughtful wizard, with a good-hearted and peaceful nature. " +
-                            "He has a scholarly, slightly pompous speaking style. \n" +
-                            "He speaks openly about himself when asked, describing himself as a \"wizard of some renown\" " +
-                            "who enjoys good wine and ocasionally writing poetry. \n" +
-                            "He frequently shares anecdotes from his youth or his career as a wizard.\n");
-                    return handleCharacterChoice("Gale");
-                case "4":
-                case "shadowheart":
-                    System.out.println("A devout follower of Shar, Shadowheart is the sole survivor of a holy mission" +
-                            " undertaken on the Mistress of the Night's behest.\n" + "With raven black hair and attire, " +
-                            "Shadowheart makes as strong of an impression as her personality.\n" +
-                            "She dislikes those that disapprove of her worship or people pressing her for answers or details. \n" +
-                            "She does not like needless cruelty or violence and can respond unfavorably to being " +
-                            "too open with untrustworthy or unknown individuals. \n" +
-                            "She loves animals and will always react favourably to positive interactions " +
-                            "with them and negatively to cruelty towards animals. \n" +
-                            "Zealously devoted, independent and headstrong, " +
-                            "she prefers pragmatic solutions to issues, decisive action " +
-                            "and staying uninvolved in the problems of others.\n");
-                    return handleCharacterChoice("Shadowheart");
-                case "5":
-                case "wyll":
-                    System.out.println("A valiant hero working in the frontiers of Baldur's Gate, " +
-                            "Wyll fights injustice and hunts monsters wherever they may hide. \nThough bound " +
-                            "in pact to an infernal fiend, he has dedicated his whole life to protecting the city " +
-                            "he loves. \nWyll is heroic and kindhearted, dedicating most of his life to fighting " +
-                            "on behalf of the people of the Sword Coast. \n" +
-                            "He takes his duty and title seriously, and speaks boastfully of his skills " +
-                            "and past as the Blade of Frontiers.\n");
-                    return handleCharacterChoice("Wyll");
-                case "6":
-                case "karlach":
-                    System.out.println("Once a soldier forced to fight in the fires of Avernus, now a woman on the brink of freedom. \n" +
-                            "Karlach is an extremely passionate individual who strives to live life to the fullest. \n" +
-                            "She tends to speak excitedly regarding any of life's simple pleasures, whether that" +
-                            " be food, drink, friends, or intimacy. \nHer demeanor is generally joyous and very forward, " +
-                            "having no fear of loudly proclaiming her love of being alive and how much she cares for those close to her. \n" +
-                            "Her positive disposition and infectious energy seem to allow her to make friends easily. \n" +
-                            "With a malfunctioning engine for a heart, Karlach is burning with desire to live. \n" +
-                            "Will she be able to save herself, or will hell catch up with her sooner or later? \n");
-                    return handleCharacterChoice("Karlach");
-                case "7":
-                case "the dark urge":
-                    System.out.println("My rancid blood whispers to me: kill, kill, and kill again. \n" +
-                            "My ruined body yearns to reap death in this world, and when this foul Urge calls, " +
-                            "it possesses my whole being. \nInjured beyond repair, I know nothing besides this; \n" +
-                            "I must resist this Dark Urge, lest it consume my mind. I must discover what happened to me, \n" +
-                            "and who I was. Before my twitching knife-hand writes a tragedy in blood. \n");
-                    System.out.println("You chose The Dark Urge, is this correct? 'Y'/[Enter] or 'N': \n");
-                    confirmationInput = input.nextLine().toUpperCase();
-                    if (confirmationInput.startsWith("Y") || confirmationInput.isEmpty()) {
-                        BattleUnit character = new BattleUnit();
-                        character.createCharacter();
-                        return "The Dark Urge";
-                    } else {
-                        return newCharacterPrompt();
-                    }
-                case "8":
-                case "own":
-                case "custom":
-                    System.out.println("You want to make your own character, is that correct? 'Y'/[Enter] or 'N': \n");
-                    confirmationInput = input.nextLine().toUpperCase();
-                    if (confirmationInput.startsWith("Y") || confirmationInput.isEmpty()) {
-                        BattleUnit character = new BattleUnit();
-                        character.createCharacter();
-                        return "Custom";
-                    } else {
-                        return newCharacterPrompt();
-                    }
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.\n");
-                    newCharacterPrompt();
+    public static void getUserChoice() {
+        do {
+            String userChoice = input.nextLine().trim();
+
+            if (userChoice.matches("\\d")) {
+                int integerChoice = Integer.parseInt(userChoice);
+                if (integerChoice >= 1 && integerChoice <= NewGameCharacterList.values().length) {
+                    choiceFromEnum(NewGameCharacterList.values()[integerChoice - 1]); //until input validation added
+                    return;
+                } else {
+                    System.out.println("Invalid choice. Please enter a valid number. \n");
+                }
+            } else {
+                try {
+                    NewGameCharacterList selectedOption = NewGameCharacterList.valueOf(userChoice.toUpperCase().replace("-", "_").replace(" ", "_"));
+                    choiceFromEnum(selectedOption);
+                    return;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid choice. Please enter a valid choice. \n");
+                }
             }
+        } while (true);
+    }
+
+    public static void choiceFromEnum(NewGameCharacterList userChoice) {
+        switch (userChoice) {
+            case SAVARIC:
+                System.out.println("Savaric is a brutal savage, known only by their savagery and taste for profit...\n" +
+                        "A former mercenary, Savaric's only concern is their own benefit. " +
+                        "Savaric prefers to handle situations directly, and has little patience for diplomacy.");
+                Humanoid savaric = new Humanoid(new CharacterName("Savaric"), CharacterRace.CharacterRacesEnum.HUMAN, CharacterSubrace.CharacterSubracesEnum.NONE, CharacterClass.CharacterClassesEnum.BARBARIAN, CharacterBackground.CharacterBackgroundsEnum.CRIMINAL, );
+                savaric.displayCharacterInfo();
+                return;
+            case BALDWIN:
+                System.out.println("Baldwin is a Paladin, known by the peasantry in the slums of Isgard.\nBaldwin is also a humble blacksmith, providing his community with armor and weapons to fight against the Abyss. \n");
+                Humanoid baldwin = new Humanoid(new CharacterName("Baldwin"), CharacterRace.CharacterRacesEnum.DWARF, CharacterSubrace.CharacterSubracesEnum.SHIELD_DWARF, CharacterClass.CharacterClassesEnum.PALADIN, CharacterBackground.CharacterBackgroundsEnum.FOLK_HERO);
+                baldwin.displayCharacterInfo();
+                return;
+            case YSORIA:
+                System.out.println("Ysoria is a deceitful witch that specializes in manipulation.\nShe finds pleasure in trickery, deceit, and surprise. Her home is well-kept, serviced by her thralls that fell for her false promises. \n");
+                Humanoid ysoria = new Humanoid(new CharacterName("Ysoria"), CharacterRace.CharacterRacesEnum.ELF, CharacterSubrace.CharacterSubracesEnum.DARK_ELF, CharacterClass.CharacterClassesEnum.WARLOCK, CharacterBackground.CharacterBackgroundsEnum.CHARLATAN);
+                ysoria.displayCharacterInfo();
+                return;
+            case AURELIA:
+                System.out.println("Aurelia is a poor thief accustomed to survival by any means necessary... \nShe often retells stories of her youth, where pickpocketing and stealing food meant another day of life for herself. \n");
+                Humanoid aurelia = new Humanoid(new CharacterName("Aurelia"), CharacterRace.CharacterRacesEnum.GNOME, CharacterSubrace.CharacterSubracesEnum.ROCK_GNOME, CharacterClass.CharacterClassesEnum.ROGUE, CharacterBackground.CharacterBackgroundsEnum.URCHIN);
+                aurelia.displayCharacterInfo();
+                return;
+            case OTTO:
+                System.out.println("Otto is the titular Bard of the Seventh Kingdom. \nOtto favors diplomacy, a good wine, and entertainment than violence. When possible, Otto will make friends in unexpected places. \n");
+                Humanoid otto = new Humanoid(new CharacterName("Otto"), CharacterRace.CharacterRacesEnum.HALF_ELF, CharacterSubrace.CharacterSubracesEnum.HIGH_HALF_ELF, CharacterClass.CharacterClassesEnum.BARD, CharacterBackground.CharacterBackgroundsEnum.ENTERTAINER);
+                otto.displayCharacterInfo();
+                return;
+            case CHLOE:
+                System.out.println("Chloe is a noble Druid obsessed with solving the riddle of civilization.\nIf we were all meant to be, surely this world would have the means to support us? While curious, Chloe is hesitant to commit to anything that might yield bad fruit. \n");
+                Humanoid chloe = new Humanoid(new CharacterName("Chloe"), CharacterRace.CharacterRacesEnum.ELF, CharacterSubrace.CharacterSubracesEnum.WOOD_ELF, CharacterClass.CharacterClassesEnum.DRUID, CharacterBackground.CharacterBackgroundsEnum.OUTLANDER);
+                chloe.displayCharacterInfo();
+                return;
+            case THE_OUTCAST:
+                System.out.println("The fringe of society is where you call home. You, among your caste, are the last to find relief. \n");
+                Humanoid theOutcast = new Humanoid();
+                theOutcast.createCharacter();
+                theOutcast.displayCharacterInfo();
+                return;
+            case CUSTOM:
+                System.out.println("This is a placeholder statement. Custom chosen...");
+                Humanoid baba = new Humanoid();
+                baba.createCharacter();
+                baba.displayCharacterInfo();
+                return;
+            default:
+                System.out.println("Invalid option");
         }
     }
 }

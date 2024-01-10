@@ -8,7 +8,7 @@
 // for you, but you can always add more by pressing Ctrl+F8.
 
 /**
- * &#064;(#)SchremppRyanChroniclesOfFaerun.java
+ * &#064;(#)SchremppRyanBirthright.java
  * @author Ryan Schrempp
  * @version undetermined 2023/11/24 8:23 AM
  *
@@ -21,9 +21,8 @@
  *         existing campaign, create a new campaign, load their preferred existing campaign, or quit the application.
  *
  */
-public class ChroniclesOfFaerun { //BEGIN CLASS
+public class Birthright { //BEGIN CLASS
     public static void main(String[] args) { //BEGIN MAIN
     MainMenu.mainMenuOptions();
-
-        }//END MAIN
+System.exit(0);        }//END MAIN
 } //END CLASS

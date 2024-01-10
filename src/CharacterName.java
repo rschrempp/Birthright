@@ -1,15 +1,24 @@
 import java.util.Scanner;
 
-public class CharacterNames {
-    private static String characterName;
-    private static final Scanner input = new Scanner(System.in);
+public class CharacterName {
+    private String characterName;
+    private final Scanner input = new Scanner(System.in);
 
-    public static String getCharacterName() {
-        setCharacterName();
+    public CharacterName(String characterName) {
+        this.characterName = characterName;
+    }
+
+    public CharacterName() {
+
+    }
+
+    public String getCharacterName() {
         return characterName;
     }
-    private static void setCharacterName() {
+
+    public void setCharacterName() {
         boolean isValid;
+
         do {
             System.out.println("Enter your name (alphabetic characters, max length 28): \n");
             characterName = input.nextLine().stripLeading().stripTrailing();
@@ -21,3 +30,4 @@ public class CharacterNames {
         } while (!isValid);
     }
 }
+
