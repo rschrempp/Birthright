@@ -1,12 +1,10 @@
 import java.util.*;
 
 public class CharacterAttributes {
-    private CharacterAttributesEnum characterAttributes;
-    private List<CharacterAttributesEnum> attributes = null;
-    private static final Map<CharacterAttributesEnum, Integer> attributesMap = initializeAttributesMap();
+    private LinkedHashMap<CharacterAttributesEnum, Integer> attributesMap = initializeAttributesMap();
     private static final Scanner input = new Scanner(System.in);
 
-    public CharacterAttributes(CharacterAttributesEnum... attributes) {this.attributes = Arrays.asList(attributes); }
+    public CharacterAttributes(CharacterAttributesEnum... attributes) {this.attributesMap = initializeAttributesMap(); }
     public CharacterAttributes() {
 
 }
@@ -23,20 +21,22 @@ public enum CharacterAttributesEnum {
     public String getDisplayAttribute() { return displayAttributeEnum; }
 }
 
-    private static Map<CharacterAttributesEnum, Integer> initializeAttributesMap() {
-        Map<CharacterAttributesEnum, Integer> attributesMap = new HashMap<>();
+    private LinkedHashMap<CharacterAttributesEnum, Integer> initializeAttributesMap() {
+        LinkedHashMap<CharacterAttributesEnum, Integer> attributesMap = new LinkedHashMap<>();
         for (CharacterAttributesEnum attribute : CharacterAttributesEnum.values()) {
             attributesMap.put(attribute, 8);
         }
         return attributesMap;
     }
 
-    public List<CharacterAttributesEnum> getCharacterAttributes() {
-        return attributes;
+    public Map<CharacterAttributesEnum, Integer> getCharacterAttributes() {
+        return attributesMap;
     }
 
+    public void setOriginCharacterAttributes(Map<CharacterAttributesEnum, Integer> attributesValues) {
+        attributesMap.putAll(attributesValues);
+    }
     public void setCharacterAttributes() {
-        CharacterAttributesEnum finalAttributeSelection = null;
         int maxTotalAttributePoints = 27;
 
         do {
@@ -49,13 +49,12 @@ public enum CharacterAttributesEnum {
             System.out.println("\nEnter attribute to change (or 'done' to finish): \n");
             String userInput = input.nextLine().trim();
 
-            if (userInput.equalsIgnoreCase("done") && maxTotalAttributePoints == 0) {
+            if (userInput.equalsIgnoreCase("done")) {
                 break;
             }
 
             try {
                 if (attributesMap.containsKey(CharacterAttributesEnum.valueOf(userInput.toUpperCase()))) {
-                    finalAttributeSelection = CharacterAttributesEnum.valueOf(userInput.toUpperCase());
                     int currentAttributePoints = attributesMap.get(CharacterAttributesEnum.valueOf(userInput.toUpperCase()));
                     System.out.println("Enter points to add (positive) or subtract (negative) to " + userInput + ": ");
                     int attributePointsToAddOrSubtract = Integer.parseInt(input.nextLine());
@@ -74,12 +73,12 @@ public enum CharacterAttributesEnum {
                 System.out.println("Invalid input. Please enter a valid attribute and points.");
             }
         } while (maxTotalAttributePoints != 0);
-        characterAttributes = finalAttributeSelection;
     }
 
-    private static void printChosenAttributes() {
+    private void printChosenAttributes() {
         for (CharacterAttributesEnum attribute : CharacterAttributesEnum.values()) {
-            System.out.println(attribute + ": " + attributesMap.get(attribute));
+            String attributeDisplayName = attribute.getDisplayAttribute();
+            System.out.println(attributeDisplayName + ": " + attributesMap.get(attribute));
         }
         System.out.println();
     }

@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ public class Humanoid {
     private final CharacterClass characterClass;
     private final CharacterBackground characterBackground;
     private final CharacterAttributes characterAttributes;
+    Map<CharacterAttributes.CharacterAttributesEnum, Integer> attributesValues = new HashMap<>();
 
     //MainCharacter constructor
     public Humanoid() {
@@ -72,6 +74,10 @@ public class Humanoid {
 
     public CharacterAttributes getCharacterAttributes() {
         return characterAttributes;
+    }
+
+    public void setOriginCharacterAttributes() {
+        characterAttributes.setOriginCharacterAttributes(attributesValues);
     }
 
     public void setCharacterAttributes() {
@@ -142,14 +148,18 @@ public class Humanoid {
     public void displayCharacterInfo() {
         System.out.println("Character information for " + this.characterName.getCharacterName() + ": \n");
         System.out.println("Race: " + this.characterRace.getCharacterRace().getDisplayRace());
-        System.out.println("Subrace: " + this.characterSubrace.getCharacterSubrace().getDisplaySubrace());
+        if (this.characterSubrace.getCharacterSubrace() != CharacterSubrace.CharacterSubracesEnum.NONE) {
+            System.out.println("Subrace: " + this.characterSubrace.getCharacterSubrace().getDisplaySubrace());
+        }
         System.out.println("Class: " + this.characterClass.getCharacterClass().getDisplayClass());
         System.out.println("Background: " + this.characterBackground.getCharacterBackground().getDisplayBackground());
         System.out.println("\nAttributes: ");
-        System.out.println(characterAttributes.getCharacterAttributes());
-//        for (Map.Entry<CharacterAttributes, Integer> attribute : characterAttributes.entrySet()) {
-//            String attributeName = String.valueOf(attribute.getKey());
-//            int attributeValue = attribute.getValue();
-//            System.out.printf("%s: %d%n", attributeName, attributeValue);
+
+        Map<CharacterAttributes.CharacterAttributesEnum, Integer> attributesMap = characterAttributes.getCharacterAttributes();
+        for (Map.Entry<CharacterAttributes.CharacterAttributesEnum, Integer> attribute : attributesMap.entrySet()) {
+            String attributeName = attribute.getKey().getDisplayAttribute();
+            int attributeValue = attribute.getValue();
+            System.out.printf("%s: %d%n", attributeName, attributeValue);
         }
     }
+}
