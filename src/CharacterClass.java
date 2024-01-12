@@ -21,7 +21,8 @@ public class CharacterClass {
         ROGUE("Rogue"),
         SORCERER("Sorcerer"),
         WARLOCK("Warlock"),
-        WIZARD("Wizard");
+        WIZARD("Wizard"),
+        NONE("None");
 
         private final String displayClassEnum;
         CharacterClassesEnum(String displayClass) {
@@ -32,32 +33,30 @@ public class CharacterClass {
     public CharacterClassesEnum getCharacterClass() { return characterClass; }
     public void setCharacterClass(CharacterClassesEnum charClass) { this.characterClass = charClass; }
     public void setCharacterClass() {
-        characterClass = null;
         do {
             System.out.println("Choose your class: \n");
-            for (CharacterClass.CharacterClassesEnum charClass : CharacterClass.CharacterClassesEnum.values()) {
-                System.out.println(charClass.ordinal() + 1 + ".) " + charClass.displayClassEnum);
+            for (int i = 0; i < CharacterClassesEnum.values().length - 1; i++) {
+                CharacterClassesEnum characterClass = CharacterClassesEnum.values()[i];
+                System.out.println(characterClass.ordinal() + 1 + ".) " + characterClass.displayClassEnum);
             }
             String userInput = input.nextLine().trim();
             if (userInput.matches("\\d+")) {
                 int userChoice = Integer.parseInt(userInput);
-                if (userChoice >= 1 && userChoice <= CharacterClass.CharacterClassesEnum.values().length) {
+                if (userChoice >= 1 && userChoice <= CharacterClass.CharacterClassesEnum.values().length - 1) {
                     characterClass = (CharacterClass.CharacterClassesEnum.values()[userChoice - 1]);
-                    return; //until input validation added
+                    characterClassValidation();
                 } else {
                     System.out.println("Invalid choice. Please enter a valid number. \n");
-                    continue;
                 }
             } else {
                 try {
                     characterClass = CharacterClass.CharacterClassesEnum.valueOf(userInput.toUpperCase().replace("-", "_").replace(" ", "_"));
-                    return; //until input validation added
+                    characterClassValidation();
                 } catch (IllegalArgumentException e) {
                     System.out.println("Invalid class. Please enter a valid class. \n");
-//                    continue;
                 }
             }
-        } while (true);
+        } while (characterClass == CharacterClassesEnum.NONE);
     }
     public static CharacterClass fromEnum(CharacterClass.CharacterClassesEnum characterClassesEnum) {
         return switch (characterClassesEnum) {
@@ -71,5 +70,14 @@ public class CharacterClass {
         }
             default -> throw new IllegalArgumentException("Unsupported CharacterClassesEnum: " + characterClassesEnum);
         };
+    }
+    public void characterClassValidation() {
+        if (characterClass != null) {
+            System.out.println("You chose " + characterClass.displayClassEnum + ", is that correct? 'Y'/[Enter] or 'N': \n");
+            String confirmationInput = input.nextLine().toUpperCase();
+            if ((confirmationInput.startsWith("Y") || confirmationInput.isEmpty())) {
+                return;
+            } else characterClass = CharacterClass.CharacterClassesEnum.NONE;
+        }
     }
 }

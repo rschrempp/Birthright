@@ -11,8 +11,10 @@ public class OriginCharacters {
     public static Humanoid aurelia;
     public static Humanoid otto;
     public static Humanoid chloe;
-
-    static List<CharacterAttributes.CharacterAttributesEnum> predefinedCharacterAttributes = Arrays.asList(
+    public static Humanoid theOutcast;
+    public static Humanoid custom;
+    
+    static List<CharacterAttributes.CharacterAttributesEnum> originCharacterAttributes = Arrays.asList(
             CharacterAttributes.CharacterAttributesEnum.STRENGTH,
             CharacterAttributes.CharacterAttributesEnum.DEXTERITY,
             CharacterAttributes.CharacterAttributesEnum.CONSTITUTION,
@@ -27,7 +29,7 @@ public class OriginCharacters {
             CharacterSubrace.CharacterSubracesEnum.NONE,
             CharacterClass.CharacterClassesEnum.BARBARIAN,
             CharacterBackground.CharacterBackgroundsEnum.CRIMINAL,
-            predefinedCharacterAttributes);
+            originCharacterAttributes);
 
     Map<CharacterAttributes.CharacterAttributesEnum, Integer> attributesValues = new HashMap<>();
     attributesValues.put(CharacterAttributes.CharacterAttributesEnum.STRENGTH, 17);
@@ -50,7 +52,7 @@ public class OriginCharacters {
                 CharacterSubrace.CharacterSubracesEnum.SHIELD_DWARF,
                 CharacterClass.CharacterClassesEnum.PALADIN,
                 CharacterBackground.CharacterBackgroundsEnum.FOLK_HERO,
-                predefinedCharacterAttributes);
+                originCharacterAttributes);
 
         Map<CharacterAttributes.CharacterAttributesEnum, Integer> attributesValues = new HashMap<>();
         attributesValues.put(CharacterAttributes.CharacterAttributesEnum.STRENGTH, 15);
@@ -73,7 +75,7 @@ public class OriginCharacters {
                 CharacterSubrace.CharacterSubracesEnum.DARK_ELF,
                 CharacterClass.CharacterClassesEnum.WARLOCK,
                 CharacterBackground.CharacterBackgroundsEnum.CHARLATAN,
-                predefinedCharacterAttributes);
+                originCharacterAttributes);
 
         Map<CharacterAttributes.CharacterAttributesEnum, Integer> attributesValues = new HashMap<>();
         attributesValues.put(CharacterAttributes.CharacterAttributesEnum.STRENGTH, 9);
@@ -96,7 +98,7 @@ public class OriginCharacters {
                 CharacterSubrace.CharacterSubracesEnum.ROCK_GNOME,
                 CharacterClass.CharacterClassesEnum.ROGUE,
                 CharacterBackground.CharacterBackgroundsEnum.URCHIN,
-                predefinedCharacterAttributes);
+                originCharacterAttributes);
 
         Map<CharacterAttributes.CharacterAttributesEnum, Integer> attributesValues = new HashMap<>();
         attributesValues.put(CharacterAttributes.CharacterAttributesEnum.STRENGTH, 11);
@@ -119,7 +121,7 @@ public class OriginCharacters {
                 CharacterSubrace.CharacterSubracesEnum.HIGH_HALF_ELF,
                 CharacterClass.CharacterClassesEnum.BARD,
                 CharacterBackground.CharacterBackgroundsEnum.ENTERTAINER,
-                predefinedCharacterAttributes);
+                originCharacterAttributes);
 
         Map<CharacterAttributes.CharacterAttributesEnum, Integer> attributesValues = new HashMap<>();
         attributesValues.put(CharacterAttributes.CharacterAttributesEnum.STRENGTH, 10);
@@ -142,7 +144,7 @@ public class OriginCharacters {
                 CharacterSubrace.CharacterSubracesEnum.WOOD_ELF,
                 CharacterClass.CharacterClassesEnum.DRUID,
                 CharacterBackground.CharacterBackgroundsEnum.OUTLANDER,
-                predefinedCharacterAttributes);
+                originCharacterAttributes);
 
         Map<CharacterAttributes.CharacterAttributesEnum, Integer> attributesValues = new HashMap<>();
         attributesValues.put(CharacterAttributes.CharacterAttributesEnum.STRENGTH, 9);

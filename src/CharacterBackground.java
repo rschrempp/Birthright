@@ -20,7 +20,8 @@ public CharacterBackground() {
         OUTLANDER("Outlander"),
         SAGE("Sage"),
         SOLDIER("Soldier"),
-        URCHIN("Urchin");
+        URCHIN("Urchin"),
+        NONE("None");
         private final String displayBackgroundEnum;
 
         CharacterBackgroundsEnum(String displayBackground) { this.displayBackgroundEnum = displayBackground; }
@@ -32,10 +33,10 @@ public CharacterBackground() {
     public void setCharacterBackground(CharacterBackgroundsEnum background) {this.characterBackground = background; }
 
     public void setCharacterBackground() {
-        characterBackground = null;
         do {
             System.out.println("Choose your background: \n");
-            for (CharacterBackground.CharacterBackgroundsEnum background : CharacterBackground.CharacterBackgroundsEnum.values()) {
+            for (int i = 0; i < CharacterBackgroundsEnum.values().length - 1; i++) {
+                CharacterBackgroundsEnum background = CharacterBackgroundsEnum.values()[i];
                 System.out.println(background.ordinal() + 1 + ".) " + background.displayBackgroundEnum);
             }
             String userInput = input.nextLine().trim();
@@ -43,22 +44,21 @@ public CharacterBackground() {
                 int userChoice = Integer.parseInt(userInput);
                 if (userChoice >= 1 && userChoice <= CharacterBackground.CharacterBackgroundsEnum.values().length) {
                     characterBackground = (CharacterBackground.CharacterBackgroundsEnum.values()[userChoice - 1]);
-                    return; //until input validation added
+                    backgroundValidation();
                 } else {
                     System.out.println("Invalid choice. Please enter a valid number. \n");
-                    continue;
                 }
             } else {
                 try {
                     characterBackground = (CharacterBackground.CharacterBackgroundsEnum.valueOf(userInput.toUpperCase().replace("-", "_").replace(" ", "_")));
-                    return; //until input validation added
+                    backgroundValidation();
                 } catch (IllegalArgumentException e) {
                     System.out.println("Invalid class. Please enter a valid class. \n");
-//                    continue;
                 }
             }
-        } while (true);
+        } while (characterBackground == CharacterBackgroundsEnum.NONE);
     }
+
     public static CharacterBackground fromEnum(CharacterBackground.CharacterBackgroundsEnum characterBackgroundsEnum) {
         return switch (characterBackgroundsEnum) {
             case ACOLYTE, CHARLATAN, CRIMINAL,
@@ -71,5 +71,14 @@ public CharacterBackground() {
             }
             default -> throw new IllegalArgumentException("Unsupported CharacterBackgroundsEnum: " + characterBackgroundsEnum);
         };
+    }
+    public void backgroundValidation() {
+        if (characterBackground != null) {
+            System.out.println("You chose " + characterBackground.displayBackgroundEnum + ", is that correct? 'Y'/[Enter] or 'N': \n");
+            String confirmationInput = input.nextLine().toUpperCase();
+            if ((confirmationInput.startsWith("Y") || confirmationInput.isEmpty())) {
+                return;
+            } else characterBackground = CharacterBackground.CharacterBackgroundsEnum.NONE;
+        }
     }
 }
